@@ -11,7 +11,7 @@ import Foundation
 enum UnsplashRoute {
     
     static let baseUrl = "https://api.unsplash.com/"
-    static let clientId = ""
+    static let clientId = "MlAeRpOYoQ3kbhfaz6SGbGwMYtJmu2KhJXTFTJldyEw"
     
     case random
     case featured
@@ -33,6 +33,7 @@ enum UnsplashRoute {
             URLQueryItem(name: "client_id", value: UnsplashRoute.clientId),
             URLQueryItem(name: "count", value: "15")
         ]
+        
         switch self {
         case .random, .featured:
             return items

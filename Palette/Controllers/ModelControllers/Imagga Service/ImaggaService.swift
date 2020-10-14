@@ -15,7 +15,7 @@ class ImaggaService {
     private init() {}
     
     static let baseURLPath = "http://api.imagga.com/v2"
-    static let authenticationToken = "Basic xxxx"
+    static let authenticationToken = "Basic YWNjXzU3ZTIzM2Q5MDk3YmZiMjo0YzFiNTkyNGEyYWUyZjE0MjQxOWJjNWE5ZDA2NmU4NQ=="
     
     func fetchColorsFor(imagePath: String, attempts: Int =  0, completion: @escaping ([UIColor]?) -> Void){
         guard let url = URL(string: ImaggaService.baseURLPath)?.appendingPathComponent("colors") else { completion(nil) ; return }
@@ -31,19 +31,19 @@ class ImaggaService {
                 return
             }
             guard let data = data else {completion(nil) ; return}
-            do{
+            do {
                 let decoder = JSONDecoder()
                 let imaggaColorResponse = try decoder.decode(ImaggaColorResponse.self, from: data)
                 let imaggaColors = imaggaColorResponse.result.colors.imaggaColors
                 let colors = imaggaColors.compactMap{ UIColor($0) }
                 completion(colors)
-            }catch {
+            } catch {
                 if attempts < 2 {
                     return self.fetchColorsFor(imagePath: imagePath, attempts: attempts + 1, completion: completion)
                 }
                 print("There was as error in \(#function) :  \(error) \(error.localizedDescription)")
                 completion(nil)
             }
-            }.resume()
+        }.resume()
     }
 }
